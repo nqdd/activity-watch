@@ -1,3 +1,16 @@
 [submodule "aw-webui"]
 	path = aw-webui
 	url = https://github.com/ActivityWatch/aw-webui.git
+	
+[submodule "aw-server-rust"]
+	path = aw-server-rust
+	url = https://github.com/ActivityWatch/aw-server-rust.git
+	
+[submodule "aw-watcher-window"]
+	path = aw-watcher-window
+	url = https://github.com/ActivityWatch/aw-watcher-window.git
+	
+[submodule "aw-watcher-afk"]
+	path = aw-watcher-afk
+	url = https://github.com/ActivityWatch/aw-watcher-afk.git
+	
