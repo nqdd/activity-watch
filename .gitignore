@@ -24,7 +24,7 @@ dist-ssr
 *.sw?
 
 # generated files
-src-tauri/icons/*
+aw-app/icons/*
 Cargo.lock
 Cargo.toml
 /target/

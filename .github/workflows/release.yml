@@ -4,7 +4,7 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
   workflow_dispatch:
 
 jobs:
@@ -15,10 +15,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: 'macos-latest'
-          - platform: 'ubuntu-24.04'
-          - platform: 'ubuntu-24.04-arm' # for Arm based linux.
-          - platform: 'windows-latest'
+          - platform: "macos-latest"
+          - platform: "ubuntu-24.04"
+          - platform: "ubuntu-24.04-arm" # for Arm based linux.
+          - platform: "windows-latest"
     runs-on: ${{ matrix.platform }}
 
     steps:
@@ -38,7 +38,7 @@ jobs:
           libjavascriptcoregtk-4.1-dev=2.44.0-2 \
           gir1.2-javascriptcoregtk-4.1=2.44.0-2 \
           gir1.2-webkit2-4.1=2.44.0-2;
-      
+
       - name: Install dependencies (ubuntu-arm only)
         if: matrix.platform == 'ubuntu-24.04-arm'
         # You can remove libayatana-appindicator3-dev if you don't use the system tray feature.
@@ -60,13 +60,13 @@ jobs:
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
-          workspaces: './src-tauri -> target'
+          workspaces: "./aw-app -> target"
 
       - name: Sync node version and setup cache
         uses: actions/setup-node@v6
         with:
-          node-version: 'lts/*'
-          cache: 'npm'
+          node-version: "lts/*"
+          cache: "npm"
 
       - name: Install node dependencies
         run: npm install
@@ -81,8 +81,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: ${{ github.ref_name }} # This only works if your workflow triggers on new tags.
-          releaseName: 'aw-tauri v__VERSION__' # tauri-action replaces \_\_VERSION\_\_ with the app version.
-          releaseBody: 'See the assets to download and install this version.'
+          releaseName: "aw-tauri v__VERSION__" # tauri-action replaces \_\_VERSION\_\_ with the app version.
+          releaseBody: "See the assets to download and install this version."
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}

@@ -2,53 +2,53 @@ name: Lint
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   format:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
-    - name: Set up Rust nightly
-      run: |
-        rustup toolchain install nightly
-        rustup component add --toolchain nightly rustfmt
-    - name: Check formatting
-      run: cd src-tauri; cargo fmt -- --check
+      - uses: actions/checkout@v6
+      - name: Set up Rust nightly
+        run: |
+          rustup toolchain install nightly
+          rustup component add --toolchain nightly rustfmt
+      - name: Check formatting
+        run: cd aw-app; cargo fmt -- --check
 
   clippy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
-    - name: Install dependencies
-      run: |
-        # From: https://tauri.app/v1/guides/getting-started/prerequisites
-        sudo apt update
-        sudo apt install libwebkit2gtk-4.1-dev \
-            build-essential \
-            curl \
-            wget \
-            file \
-            libxdo-dev \
-            libssl-dev \
-            libayatana-appindicator3-dev \
-            librsvg2-dev
+      - uses: actions/checkout@v6
+      - name: Install dependencies
+        run: |
+          # From: https://tauri.app/v1/guides/getting-started/prerequisites
+          sudo apt update
+          sudo apt install libwebkit2gtk-4.1-dev \
+              build-essential \
+              curl \
+              wget \
+              file \
+              libxdo-dev \
+              libssl-dev \
+              libayatana-appindicator3-dev \
+              librsvg2-dev
 
-    - name: Set up Rust nightly
-      run: |
-        rustup toolchain install nightly
-        rustup component add --toolchain nightly clippy
+      - name: Set up Rust nightly
+        run: |
+          rustup toolchain install nightly
+          rustup component add --toolchain nightly clippy
 
-    - name: Install node dependencies
-      run: npm install
+      - name: Install node dependencies
+        run: npm install
 
-    - name: Build aw-webui and icons
-      run: |
-        make prebuild
+      - name: Build aw-webui and icons
+        run: |
+          make prebuild
 
-    - name: Run clippy
-      run: cd src-tauri; cargo clippy
+      - name: Run clippy
+        run: cd aw-app; cargo clippy

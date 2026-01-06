@@ -4,21 +4,21 @@ repos:
       - id: fmt
         name: fmt
         description: Format files with cargo fmt.
-        entry: bash -c 'cd src-tauri && cargo fmt --'
+        entry: bash -c 'cd aw-app && cargo fmt --'
         pass_filenames: false
         types: [rust]
         language: system
       - id: clippy
         name: clippy
         description: Lint rust sources
-        entry: bash -c 'cd src-tauri && cargo clippy -- -D warnings'
+        entry: bash -c 'cd aw-app && cargo clippy -- -D warnings'
         pass_filenames: false
         types: [rust]
         language: system
       - id: cargo-check
         name: cargo check
         description: Check the package for errors.
-        entry: bash -c 'cd src-tauri && cargo check'
+        entry: bash -c 'cd aw-app && cargo check'
         language: system
         types: [rust]
         pass_filenames: false
@@ -28,4 +28,4 @@ repos:
     hooks:
       - id: end-of-file-fixer
       - id: check-added-large-files
-        args: ['--maxkb=500']
+        args: ["--maxkb=500"]

@@ -50,7 +50,7 @@ make build
 # Repo stucture
 
  - The frontend is in the root folder (NOTE: not yet the actual aw-webui code)
- - All rust code is in `src-tauri/` (will likely be moved)
+ - All rust code is in `aw-app/` (will likely be moved)
 
 # Roadmap
 

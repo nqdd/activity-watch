@@ -10,7 +10,7 @@ updates:
 
   # Enable version updates for cargo
   - package-ecosystem: "cargo"
-    directory: "/src-tauri"
+    directory: "/aw-app"
     schedule:
       interval: "weekly"
 
