@@ -21,7 +21,7 @@ aw-app/icons/icon.png: aw-webui/.git
 aw-webui/dist: aw-webui/.git
 	cd aw-webui && make build
 
-prebuild: aw-webui/dist node_modules aw-app/icons/icon.png
+prebuild: aw-webui/dist node_modules aw-app/icons/icon.png install-watchers modules
 
 precommit: format check
 
@@ -54,3 +54,47 @@ endif
 
 node_modules: package-lock.json
 	npm ci
+
+# Watcher
+venv:
+	python3 -m venv venv
+	./venv/bin/pip install --upgrade pip
+
+venv/.afk-installed: venv
+	cd aw-watcher-afk && ../venv/bin/pip install .
+	touch venv/.afk-installed
+
+venv/.window-installed: venv aw-watcher-window/aw_watcher_window/aw-watcher-window-macos
+	cd aw-watcher-window && ../venv/bin/pip install .
+	cp aw-watcher-window/aw_watcher_window/aw-watcher-window-macos venv/lib/python3.*/site-packages/aw_watcher_window/ 2>/dev/null || true
+	touch venv/.window-installed
+
+aw-watcher-window/aw_watcher_window/aw-watcher-window-macos: aw-watcher-window/aw_watcher_window/macos.swift
+ifeq ($(OS),Darwin)
+	swiftc aw-watcher-window/aw_watcher_window/macos.swift -o aw-watcher-window/aw_watcher_window/aw-watcher-window-macos
+else
+	@echo "Skipping Swift build (not on macOS)"
+	@touch aw-watcher-window/aw_watcher_window/aw-watcher-window-macos
+endif
+
+install-watcher-afk: venv/.afk-installed
+
+install-watcher-window: venv/.window-installed
+
+install-watchers: install-watcher-afk install-watcher-window
+
+run-watcher-afk: venv/.afk-installed
+	./venv/bin/aw-watcher-afk
+
+run-watcher-window: venv/.window-installed
+	./venv/bin/aw-watcher-window
+
+# Create modules directory with symlinks for app discovery
+modules: venv/.afk-installed venv/.window-installed
+	mkdir -p modules
+	ln -sf ../venv/bin/aw-watcher-afk modules/aw-watcher-afk
+	ln -sf ../venv/bin/aw-watcher-window modules/aw-watcher-window
+
+clean-watchers:
+	rm -rf venv modules
+	rm -f aw-watcher-window/aw_watcher_window/aw-watcher-window-macos

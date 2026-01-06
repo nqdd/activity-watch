@@ -571,12 +571,15 @@ fn discover_modules() -> BTreeMap<String, PathBuf> {
     ];
     let config = crate::get_config();
 
+    debug!("Discovery paths from config: {:?}", config.discovery_paths);
+
     let path = env::var_os("PATH").unwrap_or_default();
     let mut paths = env::split_paths(&path).collect::<Vec<_>>();
 
     // check each path in discovery_paths and add it to the start of the paths list if it's not already there
     for path in config.discovery_paths.iter() {
         if !paths.contains(path) {
+            debug!("Adding discovery path to search: {:?}", path);
             paths.insert(0, path.to_owned());
         }
     }

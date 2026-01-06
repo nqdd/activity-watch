@@ -124,7 +124,7 @@ pub fn setup_logging() -> Result<(), fern::InitError> {
 
     // Build the final dispatcher
     base_config
-        .chain(fern::Dispatch::new().level(LevelFilter::Info).chain(file))
+        .chain(fern::Dispatch::new().level(logging_level).chain(file))
         .apply()?;
 
     log::info!("Logging initialized");

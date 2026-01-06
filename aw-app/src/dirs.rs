@@ -2,6 +2,7 @@
 //!
 //! Supported platforms: Windows, Linux, macOS, Android
 
+use log::debug;
 use std::fs;
 use std::path::PathBuf;
 
@@ -115,6 +116,29 @@ pub fn get_discovery_paths() -> Vec<PathBuf> {
     #[cfg(target_os = "linux")]
     {
         // Linux: XDG-compliant paths
+
+        // Add project modules directory (for development)
+        if let Ok(exe_path) = std::env::current_exe() {
+            debug!("Current exe path: {:?}", exe_path);
+            if let Some(exe_dir) = exe_path.parent() {
+                // In dev mode: target/debug/aw-app -> ../../../modules
+                let project_modules = exe_dir
+                    .parent()
+                    .and_then(|p| p.parent())
+                    .and_then(|p| p.parent())
+                    .map(|p| p.join("modules"));
+                if let Some(modules_path) = project_modules {
+                    debug!("Checking for project modules at: {:?}", modules_path);
+                    if modules_path.exists() {
+                        debug!("Project modules directory found, adding to discovery paths");
+                        discovery_paths.push(modules_path);
+                    } else {
+                        debug!("Project modules directory does not exist");
+                    }
+                }
+            }
+        }
+
         if let Ok(home_dir) = std::env::var("HOME") {
             let home_path = PathBuf::from(&home_dir);
 
@@ -141,6 +165,29 @@ pub fn get_discovery_paths() -> Vec<PathBuf> {
     #[cfg(target_os = "windows")]
     {
         // Windows: User-specific and system paths
+
+        // Add project modules directory (for development)
+        if let Ok(exe_path) = std::env::current_exe() {
+            debug!("Current exe path: {:?}", exe_path);
+            if let Some(exe_dir) = exe_path.parent() {
+                // In dev mode: target/debug/aw-app.exe -> ../../../modules
+                let project_modules = exe_dir
+                    .parent()
+                    .and_then(|p| p.parent())
+                    .and_then(|p| p.parent())
+                    .map(|p| p.join("modules"));
+                if let Some(modules_path) = project_modules {
+                    debug!("Checking for project modules at: {:?}", modules_path);
+                    if modules_path.exists() {
+                        debug!("Project modules directory found, adding to discovery paths");
+                        discovery_paths.push(modules_path);
+                    } else {
+                        debug!("Project modules directory does not exist");
+                    }
+                }
+            }
+        }
+
         if let Ok(username) = std::env::var("USERNAME") {
             discovery_paths.push(PathBuf::from(format!(r"C:/Users/{}/aw-modules", username)));
             discovery_paths.push(PathBuf::from(format!(
@@ -153,6 +200,29 @@ pub fn get_discovery_paths() -> Vec<PathBuf> {
     #[cfg(target_os = "macos")]
     {
         // macOS: Application bundle and user paths
+
+        // Add project modules directory (for development)
+        if let Ok(exe_path) = std::env::current_exe() {
+            debug!("Current exe path: {:?}", exe_path);
+            if let Some(exe_dir) = exe_path.parent() {
+                // In dev mode: target/debug/aw-app -> ../../../modules
+                let project_modules = exe_dir
+                    .parent()
+                    .and_then(|p| p.parent())
+                    .and_then(|p| p.parent())
+                    .map(|p| p.join("modules"));
+                if let Some(modules_path) = project_modules {
+                    debug!("Checking for project modules at: {:?}", modules_path);
+                    if modules_path.exists() {
+                        debug!("Project modules directory found, adding to discovery paths");
+                        discovery_paths.push(modules_path);
+                    } else {
+                        debug!("Project modules directory does not exist");
+                    }
+                }
+            }
+        }
+
         if let Ok(home_dir) = std::env::var("HOME") {
             discovery_paths.push(PathBuf::from(home_dir).join("aw-modules"));
         }
