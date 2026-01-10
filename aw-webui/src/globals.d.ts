@@ -5,3 +5,12 @@
 declare const PRODUCTION: boolean;
 declare const AW_SERVER_URL: string;
 declare const COMMIT_HASH: string;
+
+// Tauri type definitions
+interface Window {
+  __TAURI__?: {
+    tauri: {
+      invoke: <T = any>(cmd: string, args?: Record<string, any>) => Promise<T>;
+    };
+  };
+}

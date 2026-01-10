@@ -47,6 +47,12 @@ Vue.component('aw-select-categories-or-pattern', () =>
   import('./components/SelectCategoriesOrPattern.vue')
 );
 
+// Drawer components
+Vue.component('drawer', () => import('./components/Drawer.vue'));
+Vue.component('drawer-toggle', () => import('./components/DrawerToggle.vue'));
+Vue.component('drawer-nav-item', () => import('./components/DrawerNavItem.vue'));
+Vue.component('mac-titlebar', () => import('./components/MacTitlebar.vue'));
+
 // Visualization components
 Vue.component('aw-summary', () => import('./visualizations/Summary.vue'));
 Vue.component('aw-periodusage', () => import('./visualizations/PeriodUsage.vue'));

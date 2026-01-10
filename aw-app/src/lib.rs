@@ -377,6 +377,21 @@ fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
+#[tauri::command]
+fn get_platform() -> String {
+    #[cfg(target_os = "macos")]
+    return "macos".to_string();
+    
+    #[cfg(target_os = "windows")]
+    return "windows".to_string();
+    
+    #[cfg(target_os = "linux")]
+    return "linux".to_string();
+    
+    #[cfg(not(any(target_os = "macos", target_os = "windows", target_os = "linux")))]
+    return "unknown".to_string();
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     // Rotate log if needed (before initializing logging)
@@ -581,7 +596,7 @@ pub fn run() {
             };
         })
         .plugin(tauri_plugin_shell::init())
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![greet, get_platform])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

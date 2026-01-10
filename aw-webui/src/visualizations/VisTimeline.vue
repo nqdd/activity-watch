@@ -13,10 +13,12 @@ div
 div#visualization {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
-  overflow: visible;
+  overflow: auto;
+  max-width: 100%;
 
   .vis-timeline {
     overflow: visible;
+    max-width: 100%;
   }
 
   .timeline-timeline {
