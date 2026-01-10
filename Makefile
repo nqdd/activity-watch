@@ -21,7 +21,7 @@ aw-app/icons/icon.png: aw-webui/.git
 aw-webui/dist: aw-webui/.git
 	cd aw-webui && make build
 
-prebuild: aw-webui/dist node_modules aw-app/icons/icon.png install-watchers install-sync modules
+prebuild: aw-webui/dist node_modules aw-app/icons/icon.png install-watchers modules
 
 precommit: format check
 
@@ -100,11 +100,10 @@ run-sync: aw-server-rust/target/release/aw-sync
 	./aw-server-rust/target/release/aw-sync daemon
 
 # Create modules directory with symlinks for app discovery
-modules: venv/.afk-installed venv/.window-installed aw-server-rust/target/release/aw-sync
+modules: venv/.afk-installed venv/.window-installed
 	mkdir -p modules
 	ln -sf ../venv/bin/aw-watcher-afk modules/aw-watcher-afk
 	ln -sf ../venv/bin/aw-watcher-window modules/aw-watcher-window
-	ln -sf ../aw-server-rust/target/release/aw-sync modules/aw-sync
 
 clean-watchers:
 	rm -rf venv modules
