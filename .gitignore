@@ -31,3 +31,8 @@ Cargo.lock
 # Python virtual environment and modules
 venv/
 modules/
+
+# aw-webui build artifacts
+aw-webui/node_modules/
+aw-webui/dist/
+aw-webui/dist-ssr/
