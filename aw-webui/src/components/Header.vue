@@ -190,14 +190,14 @@ export default {
   background-color: transparent;
   border: solid $lightBorderColor;
   border-width: 0 0 1px 0;
-  
+
   /* Make navbar draggable on macOS/Windows */
   -webkit-app-region: drag;
-  
+
   /* Prevent text selection while dragging */
   -webkit-user-select: none;
   user-select: none;
-  
+
   /* Add padding-top for macOS traffic lights */
   padding-top: 28px;
 }
@@ -227,7 +227,7 @@ export default {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  margin-top: 8px;  /* Additional spacing for macOS traffic lights */
+  margin-top: 8px; /* Additional spacing for macOS traffic lights */
 }
 </style>
 

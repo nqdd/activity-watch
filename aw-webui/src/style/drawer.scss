@@ -1,0 +1,26 @@
+@import 'globals';
+
+// Global drawer-related styles
+body {
+  &.drawer-open {
+    // Prevent horizontal scroll when drawer is open
+    overflow-x: hidden;
+  }
+}
+
+// Smooth transitions for body
+body {
+  transition: background-color 0.2s ease;
+}
+
+// Ensure content doesn't jump
+.content-wrapper {
+  will-change: margin-left;
+}
+
+// Mobile responsive
+@media (max-width: 767px) {
+  body.drawer-open {
+    overflow: hidden; // Prevent scroll when drawer overlay is open
+  }
+}
